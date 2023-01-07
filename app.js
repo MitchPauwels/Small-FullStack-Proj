@@ -1,13 +1,19 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const mongoose = require("mongoose");
 const db = mongoose.connection;
+const bodyParser = require("body-parser");
+const Joi = require("joi");
 
 /*---------------------/ 
         View Engine
 \----------------------*/
 // Set the view engine to EJS \\
 app.set("view engine", "ejs");
+
+// Set the views directory \\
+app.set("views", path.join(__dirname, "views"));
 
 /*---------------------/ 
         Mongoose
@@ -27,29 +33,24 @@ db.once("open", () => {
 /*---------------------/ 
         Middleware
 \----------------------*/
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // A middleware function that logs the request method and URL \\
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-/*---------------------/ 
-          EJS
-\----------------------*/
 
 /*---------------------/ 
         Routes
 \----------------------*/
+// Include the routes from the routes/index.js file \\
+app.use("/", require("./routes/index"));
 
-// A route that handles GET requests to the root path \\
-app.get("/", (req, res) => {
-  res.send("Root Page");
-});
-
-// A route that captures the value of an "id" parameter in the URL
-app.get("/users/:id", (req, res) => {
-  res.send(`User ID: ${req.params.id}`);
-});
 /*---------------------/ 
         Listening
 \----------------------*/

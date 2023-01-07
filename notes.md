@@ -8,3 +8,14 @@
     routes/index.js: This file exports the route handlers for the server. It should contain the routes for saving and displaying messages.
     views/: This directory contains the view templates that are rendered by the server.
     views/index.ejs: This is the view template that is used to render the page with the saved messages.
+
+
+    Github notes new proj:
+    echo "# Small-Fullstack-Proj" >> README.md
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/MitchPauwels/Small-Fullstack-Proj.git
+git push -u origin main
